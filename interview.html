@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}Interview Preparation – Career Copilot{% endblock %}
+
+{% block body %}
+{% set active_page = 'interview' %}
+<div class="app-shell">
+  {% include "_sidebar.html" %}
+  <div class="cc-main">
+    {% include "_topbar.html" %}
+
+    <div class="cc-content">
+      <h3 class="mb-1">Interview Preparation</h3>
+      <p class="text-muted-soft mb-4">Practice with AI-generated questions across categories.</p>
+
+      <div class="row g-4">
+        <div class="col-lg-8">
+          <div class="d-flex flex-wrap gap-2 mb-3">
+            <button class="btn btn-sm-cc btn-primary-cc active" data-interview-type="technical">Technical Interview</button>
+            <button class="btn btn-sm-cc btn-ghost-cc" data-interview-type="hr">HR Interview</button>
+            <button class="btn btn-sm-cc btn-ghost-cc" data-interview-type="coding">Coding Questions</button>
+            <button class="btn btn-sm-cc btn-ghost-cc"><i class="fa-solid fa-video me-1"></i>Mock Interview</button>
+          </div>
+
+          <div class="cc-card p-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <span class="text-muted-soft small" id="questionCounter">Question 1 of 3</span>
+              <span class="badge-skill">AI Generated</span>
+            </div>
+            <h5 id="questionText">Explain the difference between stack and queue.</h5>
+
+            <div id="answerBox" class="d-none mt-3 p-3" style="background:var(--lavender-100); border-radius:12px;">
+              <div class="small fw-semibold mb-1"><i class="fa-solid fa-lightbulb me-1"></i>Answer</div>
+              <p class="mb-0 small" id="answerText"></p>
+            </div>
+
+            <div class="d-flex flex-wrap gap-2 mt-4">
+              <button id="showAnswerBtn" class="btn btn-outline-cc btn-sm-cc">Show Answer</button>
+              <button id="nextQuestionBtn" class="btn btn-primary-cc btn-sm-cc">Next Question</button>
+              <button id="markReviewBtn" class="btn btn-outline-cc btn-sm-cc ms-auto">Mark for Review</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="cc-card p-4 mb-4">
+            <h6 class="mb-3">Your Interview Score</h6>
+            <div class="d-flex justify-content-between small mb-1"><span>Score</span><span id="scoreText">0/0</span></div>
+            <div class="cc-progress"><div class="cc-progress-bar" id="scoreBar" style="width:0%;"></div></div>
+          </div>
+          <div class="cc-card p-4">
+            <h6 class="mb-3">Tips</h6>
+            <ul class="text-muted-soft small ps-3 mb-0">
+              <li class="mb-2">Think out loud — explain your reasoning as you go.</li>
+              <li class="mb-2">Use the STAR method for HR questions.</li>
+              <li class="mb-0">Review marked questions before your next session.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/interview.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+{% block title %}Career Copilot – Career Planning Demo{% endblock %}
+
+{% block body %}
+{% include "_navbar.html" %}
+
+<!-- Hero -->
+<section class="hero-section">
+  <div class="container-narrow">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6">
+        <span class="hero-badge"><i class="fa-solid fa-sparkles"></i> Prototype demo</span>
+        <h1 class="hero-heading">Career Planning Demo</h1>
+        <p class="hero-sub">Explore example career paths, skill gaps, roadmaps and interview practice. Recommendations are illustrative, not verified career outcomes.</p>
+        <div class="d-flex flex-wrap gap-3 mt-4">
+          <a href="{{ url_for('register') }}" class="btn btn-primary-cc">Get Started <i class="fa-solid fa-arrow-right ms-1"></i></a>
+          <a href="#features" class="btn btn-outline-cc">Explore Careers</a>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="hero-illustration-wrap position-relative">
+          <svg viewBox="0 0 420 320" width="100%" role="img" aria-label="Career roadmap illustration">
+            <defs>
+              <linearGradient id="g1" x1="0" x2="1" y1="0" y2="1">
+                <stop offset="0%" stop-color="#6C3FD1"/>
+                <stop offset="100%" stop-color="#3D2280"/>
+              </linearGradient>
+            </defs>
+            <rect x="0" y="0" width="420" height="320" rx="24" fill="#ffffff"/>
+            <circle cx="330" cy="60" r="46" fill="#EFE8FC"/>
+            <path d="M40 250 C 100 180, 160 220, 210 160 S 320 90, 380 70" stroke="url(#g1)" stroke-width="6" fill="none" stroke-linecap="round"/>
+            <circle cx="40" cy="250" r="9" fill="#3D2280"/>
+            <circle cx="210" cy="160" r="9" fill="#7551C9"/>
+            <circle cx="380" cy="70" r="9" fill="#A88FE8"/>
+            <rect x="30" y="30" width="120" height="70" rx="14" fill="#EFE8FC"/>
+            <text x="45" y="60" font-family="Inter" font-size="12" fill="#3D2280" font-weight="700">Example</text>
+            <text x="45" y="80" font-family="Inter" font-size="18" fill="#241454" font-weight="800">Demo</text>
+          </svg>
+          <div class="hero-stat-card" style="top:-10px; left:-16px;">
+            <div class="small text-muted-soft">Roadmap step</div>
+            <div class="fw-bold">Learn DSA</div>
+          </div>
+          <div class="hero-stat-card" style="bottom:-10px; right:-10px;">
+            <div class="small text-muted-soft">Recommended</div>
+            <div class="fw-bold"><i class="fa-solid fa-laptop-code text-purple"></i> Web Developer</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Features -->
+<section id="features" class="section-pad">
+  <div class="container-narrow">
+    <div class="text-center mb-5">
+      <span class="section-eyebrow">What you get</span>
+      <h2 class="mt-2">Everything you need to plan your career</h2>
+    </div>
+    <div class="row g-4">
+      {% set features = [
+        ('fa-brain', 'AI Career Guidance', 'Explore sample career suggestions based on stated goals and interests.'),
+        ('fa-chart-simple', 'Skill Gap Analysis', 'Instantly see which skills you already have and which ones you need to build for your target role.'),
+        ('fa-route', 'Personalized Roadmap', 'A clear, step-by-step learning path built around your current level and career goal.'),
+        ('fa-book-open', 'Course Recommendations', 'Curated courses mapped to the exact skills your roadmap says you need next.'),
+        ('fa-comments', 'Interview Preparation', 'Practice technical, HR and coding questions with instant feedback and scoring.'),
+        ('fa-chart-line', 'Progress Tracking', 'Track skills learned, courses completed and interview performance in one dashboard.')
+      ] %}
+      {% for icon, title, desc in features %}
+      <div class="col-md-6 col-lg-4">
+        <div class="cc-card feature-card">
+          <div class="feature-icon"><i class="fa-solid {{ icon }}"></i></div>
+          <h5>{{ title }}</h5>
+          <p class="text-muted-soft mb-0">{{ desc }}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- How it works -->
+<section id="how-it-works" class="section-pad" style="background:var(--gradient-soft);">
+  <div class="container-narrow">
+    <div class="text-center mb-5">
+      <span class="section-eyebrow">Simple process</span>
+      <h2 class="mt-2">How Career Copilot works</h2>
+    </div>
+    <div class="row g-4 text-center">
+      {% set steps = [
+        ('1', 'Tell us about you', 'Share your education, skills and interests.'),
+        ('2', 'Get your analysis', 'Review example career suggestions and skill gaps.'),
+        ('3', 'Follow your roadmap', 'Learn with a step-by-step plan and curated courses.'),
+        ('4', 'Ace your interviews', 'Practice with mock interviews and track your progress.')
+      ] %}
+      {% for num, title, desc in steps %}
+      <div class="col-md-3">
+        <div class="cc-card p-4 h-100">
+          <div class="feature-icon mx-auto">{{ num }}</div>
+          <h6 class="mt-3">{{ title }}</h6>
+          <p class="text-muted-soft small mb-0">{{ desc }}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- About -->
+<section id="about" class="section-pad">
+  <div class="container-narrow">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6">
+        <span class="section-eyebrow">About the project</span>
+        <h2 class="mt-2">Built to make career decisions less overwhelming</h2>
+        <p class="text-muted-soft">Career Copilot demonstrates how students can explore career paths and skill gaps. Its current analysis is sample data and should not be relied on for important decisions.</p>
+      </div>
+      <div class="col-lg-6">
+        <div class="cc-card p-4">
+          <div class="d-flex align-items-center gap-3 mb-3">
+            <div class="feature-icon"><i class="fa-solid fa-robot"></i></div>
+            <div>
+              <h6 class="mb-0">Gemini integration planned</h6>
+              <span class="text-muted-soft small">Flask backend · SQLite · Jinja templates</span>
+            </div>
+          </div>
+          <p class="text-muted-soft small mb-0">Every recommendation you see in this demo is realistic sample data — the frontend is wired to call live API endpoints once the Flask backend is connected.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section-pad text-center text-white" style="background:var(--gradient-primary);">
+  <div class="container-narrow">
+    <h2 class="text-white">Ready to find your career path?</h2>
+    <p class="mb-4" style="color:#E6E0F8;">Explore the free educational prototype.</p>
+    <a href="{{ url_for('register') }}" class="btn btn-light fw-semibold px-4">Get Started for Free</a>
+  </div>
+</section>
+
+{% endblock %}

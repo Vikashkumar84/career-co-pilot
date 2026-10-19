@@ -1,0 +1,38 @@
+<div class="sidebar-backdrop"></div>
+<aside class="cc-sidebar">
+  <div class="brand"><i class="fa-solid fa-compass-drafting me-2"></i>Career<span>Copilot</span></div>
+
+  <nav class="cc-sidebar-nav">
+    <a href="{{ url_for('dashboard') }}" class="cc-sidebar-link {{ 'active' if active_page == 'dashboard' }}">
+      <i class="fa-solid fa-grid-2"></i> Dashboard
+    </a>
+    <a href="{{ url_for('career_analysis') }}" class="cc-sidebar-link {{ 'active' if active_page == 'career_analysis' }}">
+      <i class="fa-solid fa-magnifying-glass-chart"></i> Career Analysis
+    </a>
+    <a href="#" class="cc-sidebar-link {{ 'active' if active_page == 'skills' }}">
+      <i class="fa-solid fa-layer-group"></i> My Skills
+    </a>
+    <a href="{{ url_for('roadmap') }}" class="cc-sidebar-link {{ 'active' if active_page == 'roadmap' }}">
+      <i class="fa-solid fa-route"></i> Career Roadmap
+    </a>
+    <a href="{{ url_for('courses') }}" class="cc-sidebar-link {{ 'active' if active_page == 'courses' }}">
+      <i class="fa-solid fa-graduation-cap"></i> Recommended Courses
+    </a>
+    <a href="{{ url_for('interview') }}" class="cc-sidebar-link {{ 'active' if active_page == 'interview' }}">
+      <i class="fa-solid fa-comments"></i> Interview Prep
+    </a>
+    <a href="{{ url_for('progress') }}" class="cc-sidebar-link {{ 'active' if active_page == 'progress' }}">
+      <i class="fa-solid fa-chart-line"></i> Progress
+    </a>
+    <a href="{{ url_for('profile') }}" class="cc-sidebar-link {{ 'active' if active_page == 'profile' }}">
+      <i class="fa-solid fa-user"></i> Profile
+    </a>
+    <a href="#" class="cc-sidebar-link {{ 'active' if active_page == 'settings' }}">
+      <i class="fa-solid fa-gear"></i> Settings
+    </a>
+  </nav>
+
+  <div class="cc-sidebar-footer">
+    <a href="{{ url_for('login') }}" class="cc-sidebar-link"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+  </div>
+</aside>

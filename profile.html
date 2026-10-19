@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Profile – Career Copilot{% endblock %}
+
+{% block body %}
+{% set active_page = 'profile' %}
+<div class="app-shell">
+  {% include "_sidebar.html" %}
+  <div class="cc-main">
+    {% include "_topbar.html" %}
+
+    <div class="cc-content">
+      <h3 class="mb-1">Profile</h3>
+      <p class="text-muted-soft mb-4">Manage your personal and career information.</p>
+
+      <div class="row g-4">
+        <div class="col-lg-4">
+          <div class="cc-card p-4 text-center">
+            <div class="cc-avatar mx-auto mb-3" style="width:88px; height:88px; font-size:1.8rem; border-radius:20px;">AK</div>
+            <h5 class="mb-0">Ankit Pal</h5>
+            <p class="text-muted-soft small mb-3">B.Tech, Computer Science</p>
+            <div class="d-flex justify-content-center gap-2 mb-3">
+              <a href="#" class="btn btn-ghost-cc btn-sm-cc"><i class="fa-brands fa-github me-1"></i>GitHub</a>
+              <a href="#" class="btn btn-ghost-cc btn-sm-cc"><i class="fa-brands fa-linkedin me-1"></i>LinkedIn</a>
+            </div>
+            <button class="btn btn-primary-cc w-100">Edit Profile</button>
+          </div>
+        </div>
+
+        <div class="col-lg-8">
+          <div class="cc-card p-4 mb-4">
+            <h6 class="mb-3">Basic Information</h6>
+            <div class="row g-3">
+              <div class="col-md-6"><div class="text-muted-soft small">Name</div><div class="fw-semibold">Ankit Kumar</div></div>
+              <div class="col-md-6"><div class="text-muted-soft small">Education</div><div class="fw-semibold">B.Tech</div></div>
+              <div class="col-md-6"><div class="text-muted-soft small">Branch</div><div class="fw-semibold">Computer Science</div></div>
+              <div class="col-md-6"><div class="text-muted-soft small">Career Goal</div><div class="fw-semibold">Web Developer</div></div>
+            </div>
+          </div>
+
+          <div class="cc-card p-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h6 class="mb-0">Skills</h6>
+              <button class="btn btn-outline-cc btn-sm-cc">Update Skills</button>
+            </div>
+            <div>
+              {% for s in ['C', 'C++', 'HTML', 'CSS', 'Git', 'Problem Solving'] %}
+              <span class="badge-skill badge-have">{{ s }}</span>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

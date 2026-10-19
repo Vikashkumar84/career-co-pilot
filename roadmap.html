@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Career Roadmap – Career Copilot{% endblock %}
+
+{% block body %}
+{% set active_page = 'roadmap' %}
+<div class="app-shell">
+  {% include "_sidebar.html" %}
+  <div class="cc-main">
+    {% include "_topbar.html" %}
+
+    <div class="cc-content">
+      <div class="d-flex flex-wrap align-items-center justify-content-between mb-4 gap-3">
+        <div>
+          <h3 class="mb-1">Career Roadmap</h3>
+          <p class="text-muted-soft mb-0">Your step-by-step plan toward becoming a Web Developer.</p>
+        </div>
+        <div style="min-width:200px;">
+          <div class="d-flex justify-content-between small mb-1"><span>Roadmap progress</span><span class="fw-semibold">3/7</span></div>
+          <div class="cc-progress"><div class="cc-progress-bar" data-value="43" style="width:0%;"></div></div>
+        </div>
+      </div>
+
+      <div class="roadmap-timeline">
+        {% set steps = [
+          ('01', 'fa-book', 'Learn Programming Fundamentals', 'Understand variables, loops, functions and problem solving.', ['C', 'C++'], true),
+          ('02', 'fa-diagram-project', 'Learn DSA', 'Master data structures and algorithms for technical interviews.', ['Arrays', 'Linked Lists', 'Trees'], true),
+          ('03', 'fa-code', 'Learn Web Development', 'Build responsive websites with HTML, CSS and JavaScript.', ['HTML', 'CSS', 'JavaScript'], true),
+          ('04', 'fa-hammer', 'Build Projects', 'Apply your skills to real-world portfolio projects.', ['Git', 'Project Design'], false),
+          ('05', 'fa-laptop-code', 'Practice Coding Problems', 'Solve problems regularly on coding platforms.', ['Problem Solving'], false),
+          ('06', 'fa-comments', 'Prepare for Interviews', 'Practice technical, HR and mock interviews.', ['Communication', 'System Design'], false),
+          ('07', 'fa-briefcase', 'Apply for Jobs/Internships', 'Start applying with a polished resume and portfolio.', ['Resume', 'Networking'], false),
+        ] %}
+        {% for num, icon, title, desc, skills, done in steps %}
+        <div class="roadmap-step {{ 'completed' if done }}">
+          <div class="roadmap-step-num">{% if done %}<i class="fa-solid fa-check"></i>{% else %}{{ num }}{% endif %}</div>
+          <div class="cc-card roadmap-card">
+            <div class="d-flex justify-content-between align-items-start">
+              <div class="d-flex align-items-center gap-2">
+                <i class="fa-solid {{ icon }}" style="color:var(--purple-600);"></i>
+                <h6 class="mb-0">{{ title }}</h6>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" {{ 'checked' if done }} aria-label="Mark step complete">
+              </div>
+            </div>
+            <p class="text-muted-soft small mt-2 mb-2">{{ desc }}</p>
+            <div>{% for s in skills %}<span class="badge-skill">{{ s }}</span>{% endfor %}</div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

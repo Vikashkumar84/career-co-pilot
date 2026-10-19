@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Recommended Courses – Career Copilot{% endblock %}
+
+{% block body %}
+{% set active_page = 'courses' %}
+<div class="app-shell">
+  {% include "_sidebar.html" %}
+  <div class="cc-main">
+    {% include "_topbar.html" %}
+
+    <div class="cc-content">
+      <h3 class="mb-1">Recommended Courses</h3>
+      <p class="text-muted-soft mb-4">Courses mapped to the skills your roadmap says you need next.</p>
+
+      <div class="d-flex flex-wrap gap-2 mb-4">
+        {% for cat in ['All', 'Programming', 'Web Development', 'DSA', 'Database', 'Cloud Computing', 'AI/ML'] %}
+        <button class="btn btn-sm-cc {{ 'btn-primary-cc' if loop.first else 'btn-ghost-cc' }}">{{ cat }}</button>
+        {% endfor %}
+      </div>
+
+      <div class="row g-4">
+        {% set courses = [
+          ('fa-laptop-code', 'Complete JavaScript Mastery', 'Web Development', 'Beginner', '6 weeks', ['JavaScript', 'DOM', 'ES6'], 40),
+          ('fa-react', 'React for Beginners', 'Web Development', 'Intermediate', '5 weeks', ['React', 'Hooks', 'JSX'], 0),
+          ('fa-database', 'SQL & Database Design', 'Database', 'Beginner', '4 weeks', ['SQL', 'Normalization'], 65),
+          ('fa-diagram-project', 'Data Structures & Algorithms', 'DSA', 'Intermediate', '8 weeks', ['Arrays', 'Trees', 'Graphs'], 20),
+          ('fa-cloud', 'Cloud Computing Essentials', 'Cloud Computing', 'Beginner', '3 weeks', ['AWS', 'Deployment'], 0),
+          ('fa-robot', 'Intro to Machine Learning', 'AI/ML', 'Advanced', '7 weeks', ['Python', 'ML Models'], 0),
+        ] %}
+        {% for icon, name, cat, level, dur, skills, progress in courses %}
+        <div class="col-md-6 col-lg-4">
+          <div class="cc-card p-4 h-100 d-flex flex-column">
+            <div class="feature-icon mb-3"><i class="fa-solid {{ icon }}"></i></div>
+            <span class="badge-skill mb-2" style="align-self:flex-start;">{{ cat }}</span>
+            <h6>{{ name }}</h6>
+            <div class="d-flex gap-3 text-muted-soft small mb-2">
+              <span><i class="fa-solid fa-signal me-1"></i>{{ level }}</span>
+              <span><i class="fa-regular fa-clock me-1"></i>{{ dur }}</span>
+            </div>
+            <div class="mb-3">{% for s in skills %}<span class="badge-skill">{{ s }}</span>{% endfor %}</div>
+            {% if progress > 0 %}
+            <div class="mb-3">
+              <div class="d-flex justify-content-between small mb-1"><span>Progress</span><span>{{ progress }}%</span></div>
+              <div class="cc-progress"><div class="cc-progress-bar" data-value="{{ progress }}" style="width:0%;"></div></div>
+            </div>
+            {% endif %}
+            <a href="#" class="btn btn-primary-cc btn-sm-cc mt-auto">{{ 'Continue Learning' if progress > 0 else 'Start Learning' }}</a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

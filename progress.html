@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Progress – Career Copilot{% endblock %}
+
+{% block body %}
+{% set active_page = 'progress' %}
+<div class="app-shell">
+  {% include "_sidebar.html" %}
+  <div class="cc-main">
+    {% include "_topbar.html" %}
+
+    <div class="cc-content">
+      <h3 class="mb-1">Your Progress</h3>
+      <p class="text-muted-soft mb-4">A snapshot of everything you've achieved so far.</p>
+
+      <div class="row g-4 mb-4">
+        {% set stats = [
+          ('fa-chart-line', 'Overall Progress', '64%', 64),
+          ('fa-layer-group', 'Skills Learned', '14/22', 64),
+          ('fa-graduation-cap', 'Courses Completed', '6/10', 60),
+          ('fa-diagram-project', 'Projects Completed', '3/5', 60),
+          ('fa-laptop-code', 'Coding Problems Solved', '128', 42),
+          ('fa-comments', 'Interview Performance', '78%', 78),
+        ] %}
+        {% for icon, label, value, pct in stats %}
+        <div class="col-md-6 col-lg-4">
+          <div class="cc-card p-4 h-100">
+            <div class="d-flex align-items-center gap-3 mb-3">
+              <div class="feature-icon"><i class="fa-solid {{ icon }}"></i></div>
+              <div>
+                <div class="text-muted-soft small">{{ label }}</div>
+                <div class="fw-bold fs-5">{{ value }}</div>
+              </div>
+            </div>
+            <div class="cc-progress"><div class="cc-progress-bar" data-value="{{ pct }}" style="width:0%;"></div></div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+      <div class="cc-card p-4">
+        <h6 class="mb-3">Skill growth over time</h6>
+        <div class="d-flex align-items-end gap-3" style="height:180px;">
+          {% for month, val in [('May', 30), ('Jun', 38), ('Jul', 45), ('Aug', 55), ('Sep', 64)] %}
+          <div class="flex-fill text-center">
+            <div style="height:{{ val }}%; background:var(--gradient-primary); border-radius:8px 8px 0 0; min-height:6px;"></div>
+            <div class="text-muted-soft small mt-2">{{ month }}</div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

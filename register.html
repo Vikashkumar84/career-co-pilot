@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Create Account – Career Copilot{% endblock %}
+
+{% block body %}
+<div class="auth-shell">
+  <div class="auth-visual d-none d-lg-flex">
+    <div style="max-width:380px;">
+      <a href="{{ url_for('index') }}" class="d-inline-flex align-items-center gap-2 text-white fw-bold fs-4 mb-4"><i class="fa-solid fa-compass-drafting"></i> Career Copilot</a>
+      <h2 class="text-white">Start your personalized career journey</h2>
+      <p style="color:#E6E0F8;">Answer a few questions and get an AI-built roadmap in minutes.</p>
+    </div>
+  </div>
+
+  <div class="auth-form-side">
+    <div class="auth-card">
+      <a href="{{ url_for('index') }}" class="d-lg-none d-inline-flex align-items-center gap-2 fw-bold fs-5 mb-4" style="color:var(--indigo-800);"><i class="fa-solid fa-compass-drafting"></i> Career Copilot</a>
+      <h3>Create your account</h3>
+      <p class="text-muted-soft mb-4">Explore the demonstration; no account will be created.</p>
+
+      <form id="registerForm" method="POST" action="{{ url_for('register') }}">
+        <div class="form-group-cc mb-3">
+          <label class="form-label small fw-semibold">Email</label>
+          <input aria-label="Email" type="email" name="email" class="form-control form-control-cc" placeholder="you@example.com" required>
+        </div>
+        <div class="row g-3 mb-3">
+          <div class="col-6 form-group-cc">
+            <label class="form-label small fw-semibold">Password</label>
+          <input aria-label="Password" type="password" name="password" class="form-control form-control-cc" placeholder="••••••••" required>
+          </div>
+          <div class="col-6 form-group-cc">
+            <label class="form-label small fw-semibold">Confirm password</label>
+          <input aria-label="Confirm password" type="password" name="confirm_password" class="form-control form-control-cc" placeholder="••••••••" required>
+          </div>
+        </div>
+        <div class="form-check mb-3"><input type="checkbox" class="form-check-input" name="legal_agree" id="legalAgree" required><label class="form-check-label" for="legalAgree">I agree to the <a href="{{ url_for('terms') }}">Terms of Service</a> and have read the <a href="{{ url_for('privacy_policy') }}">Privacy Policy</a>.</label></div><div class="form-check mb-3"><input type="checkbox" class="form-check-input" name="marketing" id="marketing"><label class="form-check-label" for="marketing">I would like product updates if this service introduces email subscriptions (no messages are sent in this demo).</label></div><p class="small text-muted-soft">Demo only: registration is not active; information typed here is not saved.</p><button type="submit" class="btn btn-primary-cc w-100">Try demo</button>
+      </form>
+
+      <p class="text-center small text-muted-soft mt-4 mb-0">
+        Already have an account? <a href="{{ url_for('login') }}" class="fw-semibold" style="color:var(--purple-600);">Log in</a>
+      </p>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('registerForm');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (!validateForm(form)) { showToast('Please fill in all fields correctly.', 'error'); return; }
+    const pass = form.password.value, confirm = form.confirm_password.value;
+    if (pass !== confirm) { showToast('Passwords do not match.', 'error'); return; }
+    showToast('Opening demo (no account was created).', 'info');
+    setTimeout(() => { window.location.href = "{{ url_for('dashboard') }}"; }, 800);
+  });
+});
+</script>
+{% endblock %}

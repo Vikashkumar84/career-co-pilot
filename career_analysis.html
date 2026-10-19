@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block title %}Career Analysis – Career Copilot{% endblock %}
+
+{% block body %}
+{% set active_page = 'career_analysis' %}
+<div class="app-shell">
+  {% include "_sidebar.html" %}
+  <div class="cc-main">
+    {% include "_topbar.html" %}
+
+    <div class="cc-content">
+      <h3 class="mb-1">Career Analysis</h3>
+      <p class="text-muted-soft mb-4">Tell us about yourself and let AI find your best-fit career.</p>
+
+      <div class="row g-4">
+        <div class="col-lg-5">
+          <div class="cc-card p-4">
+            <form id="careerAnalysisForm" novalidate>
+              <div class="form-group-cc mb-3">
+                <label class="form-label small fw-semibold">Name</label>
+          <input aria-label="Name" type="text" name="name" class="form-control form-control-cc" placeholder="Your full name" required>
+              </div>
+              <div class="form-group-cc mb-3">
+                <label class="form-label small fw-semibold">Education</label>
+          <input aria-label="Education" type="text" name="education" class="form-control form-control-cc" placeholder="e.g. B.Tech" required>
+              </div>
+              <div class="form-group-cc mb-3">
+                <label class="form-label small fw-semibold">Branch</label>
+          <input aria-label="Branch" type="text" name="branch" class="form-control form-control-cc" placeholder="e.g. Computer Science" required>
+              </div>
+              <div class="form-group-cc mb-3">
+                <label class="form-label small fw-semibold">Current skills</label>
+          <input aria-label="Current skills" type="text" name="current_skills" class="form-control form-control-cc" placeholder="e.g. C, C++, HTML, CSS" required>
+              </div>
+              <div class="form-group-cc mb-3">
+                <label class="form-label small fw-semibold">Interests</label>
+          <input aria-label="Interests" type="text" name="interests" class="form-control form-control-cc" placeholder="e.g. Web development, AI" required>
+              </div>
+              <div class="form-group-cc mb-3">
+                <label class="form-label small fw-semibold">Target career</label>
+          <input aria-label="Target career" type="text" name="target_career" class="form-control form-control-cc" placeholder="e.g. Web Developer" required>
+              </div>
+              <div class="form-group-cc mb-4">
+                <label class="form-label small fw-semibold">Experience level</label>
+                <select name="experience_level" class="form-select form-control-cc" required>
+                  <option value="" selected disabled>Select level</option>
+                  <option>Beginner</option>
+                  <option>Intermediate</option>
+                  <option>Advanced</option>
+                </select>
+              </div>
+              <button type="submit" class="btn btn-primary-cc w-100"><i class="fa-solid fa-wand-magic-sparkles me-1"></i> Show Sample Analysis</button>
+            </form>
+          </div>
+        </div>
+
+        <div class="col-lg-7">
+          <div id="analysisEmpty" class="cc-card empty-state">
+            <i class="fa-solid fa-magnifying-glass-chart"></i>
+            <h6>No analysis yet</h6>
+            <p class="mb-0 small">Fill in the form and click "Analyze My Career" to see your results here.</p>
+          </div>
+
+          <div id="analysisLoading" class="cc-card p-4 d-none">
+            <div class="skeleton mb-3" style="height:22px; width:60%;"></div>
+            <div class="skeleton mb-2" style="height:12px; width:100%;"></div>
+            <div class="skeleton mb-2" style="height:12px; width:90%;"></div>
+            <div class="skeleton" style="height:12px; width:75%;"></div>
+          </div>
+
+          <div id="analysisResults" class="d-none">
+            <div class="cc-card p-4 mb-4">
+              <span class="section-eyebrow small">Career Match</span>
+              <div class="d-flex justify-content-between align-items-center mt-2 mb-2">
+                <h5 class="mb-0" id="matchCareerName">Web Developer</h5>
+                <span class="fw-bold" style="color:var(--purple-600);" id="matchPercentText">82%</span>
+              </div>
+              <div class="cc-progress"><div class="cc-progress-bar" id="matchPercentBar" style="width:0%;"></div></div>
+            </div>
+
+            <div class="cc-card p-4">
+              <span class="section-eyebrow small">Skill Gap</span>
+              <div class="mt-3">
+                <div class="small fw-semibold mb-2">Current skills</div>
+                <div id="currentSkillsWrap"></div>
+              </div>
+              <div class="mt-3">
+                <div class="small fw-semibold mb-2">Missing skills</div>
+                <div id="missingSkillsWrap"></div>
+              </div>
+              <a href="{{ url_for('roadmap') }}" class="btn btn-outline-cc btn-sm-cc mt-3">Build My Roadmap <i class="fa-solid fa-arrow-right ms-1"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/career.js') }}"></script>
+{% endblock %}

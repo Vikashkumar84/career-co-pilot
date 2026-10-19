@@ -1,0 +1,22 @@
+<!-- Floating "Ask Career Copilot" AI assistant -->
+<button id="chatFab" class="btn btn-primary-cc" style="position:fixed; bottom:24px; right:24px; border-radius:999px; width:58px; height:58px; padding:0; z-index:1500; box-shadow:var(--shadow-hover);" aria-label="Ask Career Copilot">
+  <i class="fa-solid fa-robot fs-5"></i>
+</button>
+
+<div id="chatPanel" class="chat-window d-none" style="position:fixed; bottom:96px; right:24px; width:360px; z-index:1500;">
+  <div class="chat-header">
+    <div class="feature-icon" style="width:36px; height:36px; margin:0;"><i class="fa-solid fa-robot"></i></div>
+    <div>
+      <div class="fw-semibold">Ask Career Copilot 🤖</div>
+      <div class="text-muted-soft" style="font-size:0.75rem;">Online · AI career assistant</div>
+    </div>
+    <button id="chatClose" class="btn btn-sm ms-auto" aria-label="Close chat"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+  <div class="chat-body" id="chatBody">
+    <div class="chat-bubble ai">Hi! I'm Career Copilot. Ask me about any career path, skill or roadmap.</div>
+  </div>
+  <div class="chat-input-row">
+    <input type="text" id="chatInput" placeholder="I want to become a Java developer…" aria-label="Message">
+    <button id="chatSend" class="btn btn-primary-cc btn-sm-cc" aria-label="Send"><i class="fa-solid fa-paper-plane"></i></button>
+  </div>
+</div>

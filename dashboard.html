@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block title %}Dashboard – Career Copilot{% endblock %}
+
+{% block body %}
+{% set active_page = 'dashboard' %}
+<div class="app-shell">
+  {% include "_sidebar.html" %}
+  <div class="cc-main">
+    {% include "_topbar.html" %}
+
+    <div class="cc-content">
+      <div class="d-flex flex-wrap align-items-center justify-content-between mb-4 gap-3">
+        <div>
+          <h3 class="mb-1">Welcome back, Ankit 👋</h3>
+          <p class="text-muted-soft mb-0">Here's where your career journey stands today.</p>
+        </div>
+        <a href="{{ url_for('career_analysis') }}" class="btn btn-primary-cc"><i class="fa-solid fa-wand-magic-sparkles me-1"></i> Run New Analysis</a>
+      </div>
+
+      <!-- Progress overview -->
+      <div class="row g-4 mb-4">
+        <div class="col-lg-4">
+          <div class="cc-card p-4 h-100 d-flex flex-column align-items-center text-center">
+            <canvas id="overallProgressRing" width="140" height="140" data-percent="64"></canvas>
+            <div class="mt-2">
+              <strong class="fs-4 display-font" style="color:var(--indigo-800);">64%</strong>
+              <div class="text-muted-soft small">Overall career progress</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-8">
+          <div class="row g-4 h-100">
+            <div class="col-sm-4">
+              <div class="cc-card p-3 h-100">
+                <i class="fa-solid fa-layer-group fs-4" style="color:var(--purple-600);"></i>
+                <h4 class="mt-2 mb-0">14</h4>
+                <span class="text-muted-soft small">Skills completed</span>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="cc-card p-3 h-100">
+                <i class="fa-solid fa-graduation-cap fs-4" style="color:var(--purple-600);"></i>
+                <h4 class="mt-2 mb-0">6</h4>
+                <span class="text-muted-soft small">Courses completed</span>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <div class="cc-card p-3 h-100">
+                <i class="fa-solid fa-comments fs-4" style="color:var(--purple-600);"></i>
+                <h4 class="mt-2 mb-0">78%</h4>
+                <span class="text-muted-soft small">Interview score</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Career recommendations -->
+      <div class="d-flex align-items-center justify-content-between mb-3">
+        <h5 class="mb-0">Recommended careers for you</h5>
+      </div>
+      <div class="row g-4">
+        {% set careers = [
+          ('fa-laptop-code', 'Web Developer', 'Build modern, responsive websites and web applications.', ['HTML', 'CSS', 'JavaScript', 'React'], 88),
+          ('fa-code', 'Software Developer', 'Design and build scalable software systems and applications.', ['C++', 'DSA', 'System Design'], 81),
+          ('fa-database', 'Data Analyst', 'Turn raw data into actionable business insights.', ['SQL', 'Excel', 'Python', 'Power BI'], 74),
+          ('fa-robot', 'AI/ML Engineer', 'Build intelligent systems using machine learning models.', ['Python', 'ML', 'Statistics'], 68),
+        ] %}
+        {% for icon, name, desc, skills, match in careers %}
+        <div class="col-md-6">
+          <div class="cc-card p-4 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+              <div class="feature-icon"><i class="fa-solid {{ icon }}"></i></div>
+              <span class="badge-skill" style="background:var(--lavender-100); color:var(--purple-600);">{{ match }}% match</span>
+            </div>
+            <h5 class="mb-1">{{ name }}</h5>
+            <p class="text-muted-soft small">{{ desc }}</p>
+            <div class="mb-3">
+              {% for s in skills %}<span class="badge-skill">{{ s }}</span>{% endfor %}
+            </div>
+            <a href="{{ url_for('roadmap') }}" class="btn btn-outline-cc btn-sm-cc">View Roadmap <i class="fa-solid fa-arrow-right ms-1"></i></a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% include "_chat_widget.html" %}
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}
