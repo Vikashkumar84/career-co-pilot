@@ -94,6 +94,14 @@ def profile():
     return render_template("profile.html")
 
 
+@app.route("/skills")
+def skills():
+    return render_template("skills.html")
+
+@app.route("/settings")
+def settings():
+    return render_template("settings.html")
+
 # ---------------------------------------------------------------------------
 # API endpoints — frontend JS already calls these via fetch(). Wire each one
 # to the Gemini API + SQLite database; never hard-code the AI response.
