@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}My Skills - Career Copilot{% endblock %}
+
+{% block body %}
+{% set active_page = 'skills' %}
+<div class="app-shell">
+  {% include "_sidebar.html" %}
+  <div class="cc-main">
+    {% include "_topbar.html" %}
+    <div class="cc-content">
+      <h3>My Skills</h3>
+      <div class="cc-card p-4">
+        <h5>Skill Management</h5>
+        <p>Your skill management module is under development.</p>
+        <p>Database integration is currently in progress.</p>
+        <a href="{{ url_for('career_analysis') }}"
+           class="btn btn-primary-cc">
+          Go to Career Analysis
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
