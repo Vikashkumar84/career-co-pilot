@@ -9,7 +9,7 @@
     <a href="{{ url_for('career_analysis') }}" class="cc-sidebar-link {{ 'active' if active_page == 'career_analysis' }}">
       <i class="fa-solid fa-magnifying-glass-chart"></i> Career Analysis
     </a>
-    <a href="#" class="cc-sidebar-link {{ 'active' if active_page == 'skills' }}">
+    <a href="{{ url_for('skills') }}" class="cc-sidebar-link {{ 'active' if active_page == 'skills' }}">
       <i class="fa-solid fa-layer-group"></i> My Skills
     </a>
     <a href="{{ url_for('roadmap') }}" class="cc-sidebar-link {{ 'active' if active_page == 'roadmap' }}">
@@ -27,7 +27,7 @@
     <a href="{{ url_for('profile') }}" class="cc-sidebar-link {{ 'active' if active_page == 'profile' }}">
       <i class="fa-solid fa-user"></i> Profile
     </a>
-    <a href="#" class="cc-sidebar-link {{ 'active' if active_page == 'settings' }}">
+    <a href="{{ url_for('settings') }}" class="cc-sidebar-link {{ 'active' if active_page == 'settings' }}">
       <i class="fa-solid fa-gear"></i> Settings
     </a>
   </nav>
