@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+{% block title %}Career Analysis – Career Copilot{% endblock %}
+
+{% block body %}
+{% set active_page = 'career_analysis' %}
+<div class="app-shell">
+  {% include "_sidebar.html" %}
+  <div class="cc-main">
+    {% include "_topbar.html" %}
+
+    <div class="cc-content">
+      <div class="mb-4">
+        <h3 class="mb-1">AI Career Analysis &amp; Gap Assessment</h3>
+        <p class="text-muted-soft mb-0">Powered by Google Gemini AI — supports all career domains: Tech, Engineering, Finance, Healthcare, Design, Government &amp; more.</p>
+      </div>
+
+      <div class="row g-4">
+        <!-- Input Form -->
+        <div class="col-lg-5">
+          <div class="cc-card p-4">
+            <h5 class="fw-bold mb-3">Profile Parameters</h5>
+            <form id="careerAnalysisForm" novalidate>
+
+              <!-- Resume Upload Zone -->
+              <div class="form-group-cc mb-4">
+                <label class="form-label small fw-semibold">
+                  <i class="fa-solid fa-file-arrow-up me-1 text-purple"></i>
+                  Upload Resume <span class="text-muted-soft">(PDF / TXT — Max 4MB)</span>
+                </label>
+                <div id="resumeDropZone" class="resume-drop-zone" role="button" tabindex="0"
+                     aria-label="Click or drag your resume file here">
+                  <i class="fa-solid fa-cloud-arrow-up fa-2x text-muted-soft mb-2"></i>
+                  <div class="small fw-semibold">Drag &amp; drop your resume here</div>
+                  <div class="small text-muted-soft mt-1">or click to browse</div>
+                  <input type="file" id="resumeFileInput" accept=".pdf,.txt,.png,.jpg,.jpeg" class="d-none">
+                </div>
+                <div id="resumeStatus" class="small text-muted-soft mt-1"></div>
+                <button type="button" id="scanResumeBtn" class="btn btn-outline-cc w-100 mt-2">
+                  <i class="fa-solid fa-file-magnifying-glass me-2"></i>Scan &amp; Auto-Fill Resume
+                </button>
+              </div>
+
+              <div class="divider-cc mb-3"><span>or fill manually</span></div>
+
+              <div class="form-group-cc mb-3">
+                <label class="form-label small fw-semibold">Full Name</label>
+                <input type="text" name="name" class="form-control form-control-cc"
+                       placeholder="e.g. Ankit Sharma" value="{{ user.name or '' }}" required>
+              </div>
+              <div class="form-group-cc mb-3">
+                <label class="form-label small fw-semibold">Degree / Program</label>
+                <input type="text" name="education" class="form-control form-control-cc"
+                       placeholder="e.g. B.Tech / MBA / MBBS / BA" value="{{ user.education or '' }}" required>
+              </div>
+              <div class="form-group-cc mb-3">
+                <label class="form-label small fw-semibold">Branch / Major</label>
+                <input type="text" name="branch" class="form-control form-control-cc"
+                       placeholder="e.g. Civil Engineering / Finance / Design / CS" value="{{ user.branch or '' }}" required>
+              </div>
+              <div class="form-group-cc mb-3">
+                <label class="form-label small fw-semibold">Existing Skills <span class="text-muted-soft">(comma separated)</span></label>
+                <input type="text" name="current_skills" class="form-control form-control-cc"
+                       placeholder="e.g. AutoCAD, Python, Financial Modelling, Figma"
+                       value="{{ user.skills_list | join(', ') }}" required>
+              </div>
+              <div class="form-group-cc mb-3">
+                <label class="form-label small fw-semibold">Areas of Interest</label>
+                <input type="text" name="interests" class="form-control form-control-cc"
+                       placeholder="e.g. Structural Design, AI Research, Investment Banking, UI/UX" required>
+              </div>
+              <div class="form-group-cc mb-3">
+                <label class="form-label small fw-semibold">Target Career Ambition</label>
+                <input type="text" name="target_career" class="form-control form-control-cc"
+                       placeholder="e.g. Civil Site Engineer / Data Analyst / IAS Officer"
+                       value="{{ user.career_goal or '' }}" required>
+              </div>
+              <div class="form-group-cc mb-4">
+                <label class="form-label small fw-semibold">Current Experience Level</label>
+                <select name="experience_level" class="form-select form-control-cc" required>
+                  <option value="Beginner" selected>Beginner (Student / Entry-level)</option>
+                  <option value="Intermediate">Intermediate (1-2 Years / Projects Built)</option>
+                  <option value="Advanced">Advanced (3+ Years / Production Experience)</option>
+                </select>
+              </div>
+              <button type="submit" class="btn btn-primary-cc w-100" id="submitAnalysisBtn">
+                <i class="fa-solid fa-wand-magic-sparkles me-2"></i>Generate AI Career Analysis
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Results Display Panel -->
+        <div class="col-lg-7">
+          <!-- Loading State Spinner -->
+          <div id="analysisLoading" class="cc-card p-5 text-center d-none">
+            <div class="spinner-grow text-purple mb-3" style="width: 3rem; height: 3rem;" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            <h5 class="fw-bold">Gemini AI is Analyzing Your Trajectory...</h5>
+            <p class="text-muted-soft small mb-0">Evaluating skill gaps, market standards, and generating domain-specific milestone steps.</p>
+          </div>
+
+          <!-- Dynamic Analysis Results -->
+          <div id="analysisResultsWrap" class="{% if not latest or not latest.recommended_career %}d-none{% endif %}">
+            <div class="cc-card p-4 mb-4">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <div>
+                  <span class="badge-skill bg-purple-soft text-purple mb-1">Career Trajectory Evaluation</span>
+                  <h4 class="mb-0 fw-bold" id="matchCareerName">{{ latest.recommended_career if latest else '' }}</h4>
+                </div>
+                <div class="text-end">
+                  <span class="fw-bold fs-3 text-purple" id="matchPercentText">{{ latest.match_percentage if latest else '0' }}%</span>
+                  <div class="text-muted-soft small">Readiness Match</div>
+                </div>
+              </div>
+              <div class="cc-progress mb-3">
+                <div class="cc-progress-bar" id="matchPercentBar" style="width:{{ latest.match_percentage if latest else 0 }}%;"></div>
+              </div>
+              <p class="text-muted-soft small mb-0" id="analysisSummaryText">
+                {{ latest.ai_summary if latest else '' }}
+              </p>
+            </div>
+
+            <div class="cc-card p-4">
+              <h6 class="fw-bold mb-3">Skill Gap Diagnosis</h6>
+              <div class="mb-3">
+                <div class="small fw-semibold mb-2">Existing Strengths</div>
+                <div id="currentSkillsWrap">
+                  {% if latest and latest.current_skills_list %}
+                    {% for s in latest.current_skills_list %}
+                    <span class="badge-skill bg-emerald-soft text-emerald">{{ s }}</span>
+                    {% endfor %}
+                  {% endif %}
+                </div>
+              </div>
+              <div class="mb-4">
+                <div class="small fw-semibold mb-2">Critical Skills to Acquire</div>
+                <div id="missingSkillsWrap">
+                  {% if latest and latest.missing_skills_list %}
+                    {% for s in latest.missing_skills_list %}
+                    <span class="badge-skill badge-missing">{{ s }}</span>
+                    {% endfor %}
+                  {% endif %}
+                </div>
+              </div>
+              <a href="{{ url_for('roadmap') }}" class="btn btn-primary-cc btn-sm-cc">
+                Access Execution Roadmap <i class="fa-solid fa-arrow-right ms-2"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Empty State when no prior analysis -->
+          <div id="analysisEmpty" class="cc-card empty-state p-5 text-center {% if latest and latest.recommended_career %}d-none{% endif %}">
+            <i class="fa-solid fa-magnifying-glass-chart fa-3x text-muted-soft mb-3"></i>
+            <h5 class="fw-bold">No Analysis Yet</h5>
+            <p class="text-muted-soft small mb-0">Upload your resume for AI auto-fill, or fill in your credentials manually to generate your custom career assessment.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% include "_chat_widget.html" %}
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/career.js') }}"></script>
+{% endblock %}

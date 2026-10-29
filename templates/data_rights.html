@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Privacy and Data Rights – Career Copilot{% endblock %}
+{% block body %}
+{% include "_navbar.html" %}
+<main class="container-narrow legal-page py-5">
+  <h1 class="fw-bold mb-3">Your Data & Privacy Rights</h1>
+  <p class="text-muted-soft">At Career Copilot, you have complete control over your profile, curriculum progress, and stored career data in our MySQL database.</p>
+
+  <div class="cc-card p-4 my-4">
+    <h5 class="fw-bold mb-2">Account & Data Management</h5>
+    <p class="text-muted-soft small mb-3">You can update your personal information or permanently delete your account and all associated roadmap records directly from your account settings.</p>
+    {% if is_authenticated %}
+    <a href="{{ url_for('profile') }}" class="btn btn-outline-cc btn-sm-cc">
+      <i class="fa-solid fa-user-gear me-1"></i>Go to Profile & Deletion Settings
+    </a>
+    {% else %}
+    <a href="{{ url_for('login') }}" class="btn btn-outline-cc btn-sm-cc">
+      <i class="fa-solid fa-right-to-bracket me-1"></i>Sign in to Manage Account Data
+    </a>
+    {% endif %}
+  </div>
+
+  <div class="cc-card p-4 my-4">
+    <h5 class="fw-bold mb-2">Browser Preferences & Storage</h5>
+    <p class="text-muted-soft small mb-3">Clear local preferences and cached storage from your current browser session.</p>
+    <button class="btn btn-outline-cc btn-sm-cc" id="clear-local-data" type="button">
+      <i class="fa-solid fa-broom me-1"></i>Clear Local Browser Cache
+    </button>
+    <p id="clear-result" class="small text-emerald mt-2 mb-0" role="status" aria-live="polite"></p>
+  </div>
+
+  <h4 class="fw-bold mt-5 mb-3">Direct Privacy Inquiries</h4>
+  {% if contact_email %}
+  <p class="text-muted-soft">For formal data deletion requests, contact our data protection team at <a href="mailto:{{ contact_email }}?subject=Career%20Copilot%20Data%20Request" class="text-purple fw-semibold">{{ contact_email }}</a>.</p>
+  {% else %}
+  <p class="text-muted-soft">For formal inquiries, reach out to the project administrator via the support email configured in settings.</p>
+  {% endif %}
+</main>
+{% endblock %}

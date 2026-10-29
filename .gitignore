@@ -1,0 +1,33 @@
+# Local Python and testing cache
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.venv/
+venv/
+ENV/
+
+# Environment and Secret Files (NEVER COMMIT)
+.env
+.env.*
+*.env
+host.env
+!.env.example
+!*.env.example
+
+# Local SQLite databases & temporary user uploads
+instance/
+*.db
+*.sqlite3
+uploads/
+temp_uploads/
+
+# Archives and logs
+*.zip
+*.log
+
+# IDE & OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

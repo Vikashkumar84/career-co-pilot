@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}Create Account – Career Copilot{% endblock %}
+
+{% block body %}
+<div class="auth-shell">
+  <div class="auth-visual d-none d-lg-flex">
+    <div style="max-width:400px;">
+      <a href="{{ url_for('index') }}" class="d-inline-flex align-items-center gap-2 text-white fw-bold fs-4 mb-4">
+        <i class="fa-solid fa-compass-drafting text-purple-400"></i> Career Copilot
+      </a>
+      <h2 class="text-white fw-bold mb-3">Begin Your Intelligent Trajectory</h2>
+      <p style="color:#C9BEEC;" class="mb-4">Create your account to unlock personalized career evaluations, automated skill diagnoses, and real-time guidance from Gemini Pro.</p>
+      <div class="d-flex align-items-center gap-3 text-white-50 small">
+        <div><i class="fa-solid fa-check text-emerald me-1"></i> Free Platform</div>
+        <div><i class="fa-solid fa-database text-purple-400 me-1"></i> Cloud Persistent</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="auth-form-side">
+    <div class="auth-card">
+      <a href="{{ url_for('index') }}" class="d-lg-none d-inline-flex align-items-center gap-2 fw-bold fs-4 mb-4 text-purple">
+        <i class="fa-solid fa-compass-drafting"></i> Career Copilot
+      </a>
+      <h3 class="fw-bold mb-1">Create Account</h3>
+      <p class="text-muted-soft mb-4">Get started with your AI-powered career copilot.</p>
+
+      <form id="registerForm" method="POST" action="{{ url_for('register') }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <div class="form-group-cc mb-3">
+          <label class="form-label small fw-semibold">Full Name</label>
+          <input aria-label="Name" type="text" name="name" class="form-control form-control-cc"
+                 placeholder="e.g. Ankit Sharma" value="{{ form_data.name if form_data else '' }}" required>
+        </div>
+        <div class="form-group-cc mb-3">
+          <label class="form-label small fw-semibold">Email Address</label>
+          <input aria-label="Email" type="email" name="email" class="form-control form-control-cc"
+                 placeholder="name@example.com" value="{{ form_data.email if form_data else '' }}" required>
+        </div>
+        <div class="row g-3 mb-3">
+          <div class="col-6 form-group-cc">
+            <label class="form-label small fw-semibold">Password</label>
+            <input aria-label="Password" type="password" name="password" class="form-control form-control-cc" placeholder="Min 6 chars" required>
+          </div>
+          <div class="col-6 form-group-cc">
+            <label class="form-label small fw-semibold">Confirm Password</label>
+            <input aria-label="Confirm password" type="password" name="confirm_password" class="form-control form-control-cc" placeholder="••••••••" required>
+          </div>
+        </div>
+        <div class="form-check mb-4">
+          <input type="checkbox" class="form-check-input" name="legal_agree" id="legalAgree" required>
+          <label class="form-check-label small text-muted-soft" for="legalAgree">
+            I agree to the <a href="{{ url_for('terms') }}" class="text-purple">Terms of Service</a> and <a href="{{ url_for('privacy_policy') }}" class="text-purple">Privacy Policy</a>.
+          </label>
+        </div>
+        <button type="submit" class="btn btn-primary-cc w-100">Create Free Account</button>
+      </form>
+
+      <p class="text-center small text-muted-soft mt-4 mb-0">
+        Already have an account? <a href="{{ url_for('login') }}" class="fw-semibold text-purple">Sign in</a>
+      </p>
+    </div>
+  </div>
+</div>
+{% endblock %}

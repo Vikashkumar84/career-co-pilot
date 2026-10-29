@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% block title %}Interview Preparation – Career Copilot{% endblock %}
+
+{% block body %}
+{% set active_page = 'interview' %}
+<div class="app-shell">
+  {% include "_sidebar.html" %}
+  <div class="cc-main">
+    {% include "_topbar.html" %}
+
+    <div class="cc-content">
+      <div class="d-flex flex-wrap align-items-center justify-content-between mb-4 gap-3">
+        <div>
+          <h3 class="mb-1">Interview Preparation & Mock Drills</h3>
+          <p class="text-muted-soft mb-0">Master high-yield questions tailored to {{ target_role }}.</p>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        <!-- Interactive Question Card -->
+        <div class="col-lg-8">
+          <div class="d-flex flex-wrap gap-2 mb-3">
+            <button class="btn btn-sm-cc btn-primary-cc active" data-interview-type="technical">
+              <i class="fa-solid fa-code me-1"></i>Technical Architecture
+            </button>
+            <button class="btn btn-sm-cc btn-ghost-cc" data-interview-type="hr">
+              <i class="fa-solid fa-user-tie me-1"></i>Behavioral & HR
+            </button>
+            <button class="btn btn-sm-cc btn-ghost-cc" data-interview-type="coding">
+              <i class="fa-solid fa-terminal me-1"></i>Algorithms & Coding
+            </button>
+          </div>
+
+          <div class="cc-card p-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <span class="text-muted-soft small" id="questionCounter">Question 1 of 5</span>
+              <span class="badge-skill bg-purple-soft text-purple">
+                <i class="fa-solid fa-wand-magic-sparkles me-1"></i>Curated Drill
+              </span>
+            </div>
+            
+            <h5 class="fw-bold mb-4" id="questionText">Explain the difference between stack and queue.</h5>
+
+            <div id="answerBox" class="d-none mb-4 p-3 bg-purple-soft border-radius-sm">
+              <div class="small fw-bold text-purple mb-1">
+                <i class="fa-solid fa-lightbulb me-1"></i>Model Answer & Architecture Key:
+              </div>
+              <p class="mb-0 small" id="answerText"></p>
+            </div>
+
+            <div class="d-flex flex-wrap gap-2 pt-3 border-top">
+              <button id="showAnswerBtn" class="btn btn-outline-cc btn-sm-cc">
+                <i class="fa-solid fa-eye me-1"></i>Reveal Answer
+              </button>
+              <button id="nextQuestionBtn" class="btn btn-primary-cc btn-sm-cc">
+                Next Question <i class="fa-solid fa-arrow-right ms-1"></i>
+              </button>
+              <button id="markReviewBtn" class="btn btn-ghost-cc btn-sm-cc ms-auto">
+                <i class="fa-regular fa-bookmark me-1"></i>Mark for Review
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Metric and Strategy Sidebar -->
+        <div class="col-lg-4">
+          <div class="cc-card p-4 mb-4">
+            <h6 class="fw-bold mb-3">Practice Performance</h6>
+            <div class="d-flex justify-content-between small mb-2">
+              <span class="text-muted-soft">Correct / Completed</span>
+              <span class="fw-bold text-purple" id="scoreText">0/0</span>
+            </div>
+            <div class="cc-progress mb-3">
+              <div class="cc-progress-bar" id="scoreBar" style="width:0%;"></div>
+            </div>
+            <div class="small text-muted-soft">Scores are saved automatically to your dashboard profile.</div>
+          </div>
+
+          <div class="cc-card p-4">
+            <h6 class="fw-bold mb-3"><i class="fa-solid fa-circle-info text-purple me-2"></i>Preparation Framework</h6>
+            <ul class="text-muted-soft small ps-3 mb-0">
+              <li class="mb-2"><strong>STAR Framework:</strong> Structure responses with Situation, Task, Action, Result.</li>
+              <li class="mb-2"><strong>Think Aloud:</strong> State assumptions and computational complexity upfront.</li>
+              <li class="mb-0"><strong>Edge Cases:</strong> Explicitly handle null pointers, concurrency, and boundary inputs.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% include "_chat_widget.html" %}
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/interview.js') }}"></script>
+{% endblock %}

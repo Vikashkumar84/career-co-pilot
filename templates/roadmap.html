@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% block title %}Career Roadmap – Career Copilot{% endblock %}
+
+{% block body %}
+{% set active_page = 'roadmap' %}
+<div class="app-shell">
+  {% include "_sidebar.html" %}
+  <div class="cc-main">
+    {% include "_topbar.html" %}
+
+    <div class="cc-content">
+      <div class="d-flex flex-wrap align-items-center justify-content-between mb-4 gap-3">
+        <div>
+          <h3 class="mb-1">Career Execution Roadmap</h3>
+          <p class="text-muted-soft mb-0">
+            {% if analysis and analysis.recommended_career %}
+            Your personalized curriculum to becoming a <strong>{{ analysis.recommended_career }}</strong>.
+            {% else %}
+            Step-by-step milestones to accelerate your tech career.
+            {% endif %}
+          </p>
+        </div>
+        <div style="min-width:240px;">
+          <div class="d-flex justify-content-between small mb-1">
+            <span class="text-muted-soft">Milestone Completion</span>
+            <span class="fw-semibold text-purple" id="roadmapProgressText">{{ done }}/{{ total }} Completed</span>
+          </div>
+          <div class="cc-progress">
+            <div class="cc-progress-bar" id="roadmapProgressBar" style="width:{{ pct }}%;"></div>
+          </div>
+        </div>
+      </div>
+
+      {% if steps %}
+      <div class="roadmap-timeline">
+        {% for step in steps %}
+        <div class="roadmap-step {{ 'completed' if step.is_done else '' }}" id="step-row-{{ step.id }}">
+          <div class="roadmap-step-num" id="step-num-{{ step.id }}">
+            {% if step.is_done %}
+            <i class="fa-solid fa-check"></i>
+            {% else %}
+            {{ step.step_num or loop.index }}
+            {% endif %}
+          </div>
+          <div class="cc-card roadmap-card">
+            <div class="d-flex justify-content-between align-items-start gap-3">
+              <div class="d-flex align-items-center gap-2">
+                <i class="fa-solid {{ step.icon or 'fa-code' }} text-purple fs-5"></i>
+                <h6 class="mb-0 fw-bold">{{ step.title }}</h6>
+              </div>
+              <div class="form-check form-switch">
+                <input class="form-check-input js-step-toggle" type="checkbox"
+                       data-step-id="{{ step.id }}"
+                       {{ 'checked' if step.is_done else '' }}
+                       aria-label="Mark milestone completed">
+              </div>
+            </div>
+            <p class="text-muted-soft small mt-2 mb-2">{{ step.description }}</p>
+            <div>
+              {% for s in step.skills_list %}
+              <span class="badge-skill">{{ s }}</span>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% else %}
+      <div class="cc-card empty-state p-5 text-center">
+        <i class="fa-solid fa-route fa-3x text-muted-soft mb-3"></i>
+        <h5>No Roadmap Generated Yet</h5>
+        <p class="text-muted-soft mb-4">Run an AI Career Analysis to generate a tailored step-by-step engineering roadmap.</p>
+        <a href="{{ url_for('career_analysis') }}" class="btn btn-primary-cc">
+          <i class="fa-solid fa-wand-magic-sparkles me-2"></i>Generate Your AI Roadmap
+        </a>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% include "_chat_widget.html" %}
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.js-step-toggle').forEach(checkbox => {
+    checkbox.addEventListener('change', async function() {
+      const stepId = this.dataset.stepId;
+      try {
+        const res = await fetch(`/roadmap/toggle/${stepId}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' }
+        });
+        const data = await res.json();
+        if (data.ok) {
+          const stepRow = document.getElementById(`step-row-${stepId}`);
+          const stepNum = document.getElementById(`step-num-${stepId}`);
+          if (data.is_done) {
+            stepRow.classList.add('completed');
+            stepNum.innerHTML = '<i class="fa-solid fa-check"></i>';
+          } else {
+            stepRow.classList.remove('completed');
+            stepNum.textContent = checkbox.closest('.roadmap-step').dataset.order || '•';
+          }
+          document.getElementById('roadmapProgressText').textContent = `${data.done}/${data.total} Completed`;
+          document.getElementById('roadmapProgressBar').style.width = `${data.overall_pct}%`;
+          showToast(data.is_done ? 'Milestone completed!' : 'Milestone reopened.', 'success');
+        } else {
+          showToast('Failed to update step.', 'error');
+        }
+      } catch (err) {
+        showToast('Connection error updating step.', 'error');
+      }
+    });
+  });
+});
+</script>
+{% endblock %}

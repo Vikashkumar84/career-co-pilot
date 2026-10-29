@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}{{ heading }} – Career Copilot{% endblock %}
+{% block body %}
+{% include "_navbar.html" %}
+<main class="legal-page container-narrow py-5">
+  <h1 class="fw-bold mb-2">{{ heading }}</h1>
+  <p class="text-muted-soft small mb-4"><strong>Effective Date:</strong> October 2026 · Career Copilot SaaS Platform</p>
+  {% for title, body in sections %}
+  <section class="mb-4">
+    <h4 class="fw-bold">{{ title }}</h4>
+    <p class="text-muted-soft">{{ body }}</p>
+  </section>
+  {% endfor %}
+</main>
+{% endblock %}

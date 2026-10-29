@@ -1,0 +1,44 @@
+/* ==========================================================================
+   Career Copilot — Responsive Rules
+   ========================================================================== */
+
+@media (max-width: 1200px) {
+  .hero-heading { font-size: 2.5rem; }
+}
+
+@media (max-width: 991px) {
+  .hero-section { padding: 64px 0 48px; text-align: center; }
+  .hero-sub { margin: 0 auto; }
+  .hero-illustration-wrap { margin-top: 40px; }
+
+  .cc-sidebar {
+    position: fixed; left: 0; top: 0; z-index: 1100;
+    transform: translateX(-100%);
+    box-shadow: 0 0 40px rgba(0,0,0,0.25);
+  }
+  .cc-sidebar.open { transform: translateX(0); }
+  .hamburger-btn { display: inline-flex; align-items: center; justify-content: center; }
+  .sidebar-backdrop {
+    display: none; position: fixed; inset: 0; background: rgba(25,24,51,0.4); z-index: 1050;
+  }
+  .sidebar-backdrop.show { display: block; }
+  .cc-search { min-width: 160px; }
+}
+
+@media (max-width: 767px) {
+  .hero-heading { font-size: 2rem; }
+  .section-pad { padding: 56px 0; }
+  .cc-content { padding: 18px; }
+  .cc-topbar { padding: 14px 16px; }
+  .cc-search { display: none; }
+  .auth-visual { display: none; }
+  .auth-form-side { padding: 24px; }
+  .chat-bubble { max-width: 90%; }
+}
+
+@media (max-width: 480px) {
+  .hero-heading { font-size: 1.7rem; }
+  .btn { padding: 0.6rem 1.1rem; font-size: 0.92rem; }
+  .roadmap-timeline { padding-left: 42px; }
+  .roadmap-step-num { left: -42px; width: 36px; height: 36px; font-size: 0.85rem; }
+}

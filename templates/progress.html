@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% block title %}Career Progress – Career Copilot{% endblock %}
+
+{% block body %}
+{% set active_page = 'progress' %}
+<div class="app-shell">
+  {% include "_sidebar.html" %}
+  <div class="cc-main">
+    {% include "_topbar.html" %}
+
+    <div class="cc-content">
+      <div class="d-flex flex-wrap align-items-center justify-content-between mb-4 gap-3">
+        <div>
+          <h3 class="mb-1">Career Mastery Analytics</h3>
+          <p class="text-muted-soft mb-0">Quantitative snapshot of roadmap execution and skill attainment.</p>
+        </div>
+      </div>
+
+      <!-- Real Metrics Grid -->
+      <div class="row g-4 mb-4">
+        <div class="col-md-6 col-lg-4">
+          <div class="cc-card p-4 h-100 d-flex flex-column justify-content-between">
+            <div class="d-flex align-items-center gap-3 mb-3">
+              <div class="feature-icon"><i class="fa-solid fa-chart-line"></i></div>
+              <div>
+                <div class="text-muted-soft small fw-semibold">Roadmap Execution</div>
+                <div class="fw-bold fs-4">{{ prog.overall_pct }}%</div>
+              </div>
+            </div>
+            <div class="cc-progress">
+              <div class="cc-progress-bar" style="width:{{ prog.overall_pct }}%;"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <div class="cc-card p-4 h-100 d-flex flex-column justify-content-between">
+            <div class="d-flex align-items-center gap-3 mb-3">
+              <div class="feature-icon"><i class="fa-solid fa-layer-group"></i></div>
+              <div>
+                <div class="text-muted-soft small fw-semibold">Mastered Skills</div>
+                <div class="fw-bold fs-4">{{ prog.skills_completed }}</div>
+              </div>
+            </div>
+            <div class="cc-progress">
+              <div class="cc-progress-bar" style="width:{{ [prog.skills_completed * 10, 100] | min }}%;"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+          <div class="cc-card p-4 h-100 d-flex flex-column justify-content-between">
+            <div class="d-flex align-items-center gap-3 mb-3">
+              <div class="feature-icon"><i class="fa-solid fa-comments"></i></div>
+              <div>
+                <div class="text-muted-soft small fw-semibold">Interview Mock Rating</div>
+                <div class="fw-bold fs-4">{{ prog.interview_score_pct }}%</div>
+              </div>
+            </div>
+            <div class="cc-progress">
+              <div class="cc-progress-bar" style="width:{{ prog.interview_score_pct }}%;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Skill Competency Distribution -->
+      <div class="row g-4 mb-4">
+        <div class="col-lg-6">
+          <div class="cc-card p-4 h-100">
+            <h6 class="fw-bold mb-3">Active Skills Inventory</h6>
+            {% if skills %}
+            <div class="d-flex flex-wrap gap-2">
+              {% for s in skills %}
+              <span class="badge-skill {% if s.status == 'have' %}bg-emerald-soft text-emerald{% else %}badge-missing{% endif %}">
+                <i class="fa-solid {% if s.status == 'have' %}fa-check{% else %}fa-clock{% endif %} me-1"></i>
+                {{ s.skill_name }}
+              </span>
+              {% endfor %}
+            </div>
+            {% else %}
+            <p class="text-muted-soft small mb-0">No skills logged yet. Add your skills in the Profile section or run an AI Career Analysis.</p>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+          <div class="cc-card p-4 h-100">
+            <h6 class="fw-bold mb-3">Trajectory Timeline</h6>
+            <div class="d-flex align-items-end gap-3" style="height:140px;">
+              {% for month, val in growth_data %}
+              <div class="flex-fill text-center d-flex flex-column align-items-center justify-content-end h-100">
+                <div class="w-100" style="height:{{ val }}%; background:var(--gradient-primary); border-radius:6px 6px 0 0; min-height:8px;"></div>
+                <div class="text-muted-soft small mt-2">{{ month }}</div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% include "_chat_widget.html" %}
+{% endblock %}

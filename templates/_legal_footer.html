@@ -1,0 +1,11 @@
+<footer class="legal-footer" aria-label="Legal and contact information">
+  <nav aria-label="Legal links">
+    <a href="{{ url_for('privacy_policy') }}">Privacy Policy</a>
+    <a href="{{ url_for('terms') }}">Terms of Service</a>
+    <a href="{{ url_for('refund_policy') }}">Refund Policy</a>
+    <a href="{{ url_for('cookie_policy') }}">Cookie Policy</a>
+    <a href="{{ url_for('data_rights') }}">Data Deletion</a>
+    <button type="button" id="cookie-settings" class="link-button">Cookie Preferences</button>
+  </nav>
+  <p>&copy; 2026 {{ business_name or 'Career Copilot' }}. All rights reserved. {% if contact_email %} · <a href="mailto:{{ contact_email }}">{{ contact_email }}</a>{% endif %}</p>
+</footer>

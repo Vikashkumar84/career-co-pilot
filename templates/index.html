@@ -1,0 +1,210 @@
+{% extends "base.html" %}
+{% block title %}Career Copilot – AI Career Navigation Platform{% endblock %}
+
+{% block body %}
+{% include "_navbar.html" %}
+
+<!-- Hero Section -->
+<section class="hero-section">
+  <div class="container-narrow">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6">
+        <div class="hero-badge mb-3">
+          <i class="fa-solid fa-wand-magic-sparkles text-purple"></i>
+          <span>Powered by Google Gemini Pro</span>
+        </div>
+        <h1 class="hero-heading">Navigate Your Tech Career with Intelligent Precision</h1>
+        <p class="hero-sub">
+          Career Copilot combines Google Gemini Pro with verified curriculum roadmaps to analyze your skill gaps, chart personalized milestones, and fast-track your path into high-growth software engineering roles.
+        </p>
+        <div class="d-flex flex-wrap gap-3 mt-4">
+          {% if is_authenticated %}
+          <a href="{{ url_for('dashboard') }}" class="btn btn-primary-cc btn-lg">
+            Go to Your Dashboard <i class="fa-solid fa-arrow-right ms-2"></i>
+          </a>
+          {% else %}
+          <a href="{{ url_for('register') }}" class="btn btn-primary-cc btn-lg">
+            Start Free Career Analysis <i class="fa-solid fa-arrow-right ms-2"></i>
+          </a>
+          <a href="{{ url_for('login') }}" class="btn btn-outline-cc btn-lg">
+            Sign In to Account
+          </a>
+          {% endif %}
+        </div>
+        <div class="d-flex align-items-center gap-4 mt-4 pt-2 text-muted-soft small">
+          <div><i class="fa-solid fa-check text-emerald me-1"></i> No Credit Card Required</div>
+          <div><i class="fa-solid fa-check text-emerald me-1"></i> MySQL Persistent State</div>
+          <div><i class="fa-solid fa-check text-emerald me-1"></i> Gemini Pro Engine</div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="hero-illustration-wrap position-relative">
+          <div class="glass-panel p-4 shadow-lg border-0">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <div class="d-flex align-items-center gap-2">
+                <div class="feature-icon" style="width:38px; height:38px; margin-bottom:0;">
+                  <i class="fa-solid fa-brain"></i>
+                </div>
+                <div>
+                  <div class="fw-bold fs-6">Gemini Pro Trajectory Match</div>
+                  <div class="text-muted-soft small">Full-Stack Cloud Architect</div>
+                </div>
+              </div>
+              <span class="badge-skill bg-emerald-soft text-emerald fw-bold">92% Match</span>
+            </div>
+            
+            <div class="cc-progress mb-3">
+              <div class="cc-progress-bar" style="width: 92%;"></div>
+            </div>
+
+            <div class="mb-3">
+              <div class="text-muted-soft small mb-1 fw-semibold">Prioritized Skill Acquisition</div>
+              <div class="d-flex flex-wrap gap-1">
+                <span class="badge-skill bg-purple-soft text-purple">System Design</span>
+                <span class="badge-skill bg-purple-soft text-purple">Docker & K8s</span>
+                <span class="badge-skill bg-purple-soft text-purple">Redis Caching</span>
+                <span class="badge-skill bg-purple-soft text-purple">Microservices</span>
+              </div>
+            </div>
+
+            <div class="p-3 bg-light rounded-3">
+              <div class="d-flex align-items-center gap-2 small text-purple fw-semibold mb-1">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> AI Strategic Assessment
+              </div>
+              <div class="small text-muted-soft">
+                "Your foundational knowledge in data structures is solid. Focus on stateless distributed services and container orchestration to qualify for senior roles."
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Features Grid -->
+<section id="features" class="section-pad">
+  <div class="container-narrow">
+    <div class="text-center mb-5">
+      <span class="section-eyebrow">Platform Capabilities</span>
+      <h2 class="mt-2 fw-bold">Engineered for Ambitious Software Professionals</h2>
+      <p class="text-muted-soft mx-auto" style="max-width: 600px;">
+        A complete career acceleration ecosystem integrating AI analysis, dynamic roadmaps, and interview simulations.
+      </p>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-4">
+        <div class="cc-card feature-card">
+          <div class="feature-icon"><i class="fa-solid fa-brain"></i></div>
+          <h5 class="fw-bold">Gemini Pro Evaluation</h5>
+          <p class="text-muted-soft mb-0">Deep evaluation of your background and aspirations to compute career readiness and pinpoint high-value target positions.</p>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4">
+        <div class="cc-card feature-card">
+          <div class="feature-icon"><i class="fa-solid fa-chart-pie"></i></div>
+          <h5 class="fw-bold">Dynamic Skill Gap Diagnosis</h5>
+          <p class="text-muted-soft mb-0">Instantly isolate missing competencies required by top tech employers and receive mapped learning interventions.</p>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4">
+        <div class="cc-card feature-card">
+          <div class="feature-icon"><i class="fa-solid fa-route"></i></div>
+          <h5 class="fw-bold">Persistent Roadmaps</h5>
+          <p class="text-muted-soft mb-0">Track your progress milestone-by-milestone with interactive checkboxes stored in your private MySQL database.</p>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4">
+        <div class="cc-card feature-card">
+          <div class="feature-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+          <h5 class="fw-bold">Curated Course Mapping</h5>
+          <p class="text-muted-soft mb-0">Custom-tailored curriculum modules dynamically structured around the exact technical gaps identified in your analysis.</p>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4">
+        <div class="cc-card feature-card">
+          <div class="feature-icon"><i class="fa-solid fa-comments"></i></div>
+          <h5 class="fw-bold">Interactive Mock Drills</h5>
+          <p class="text-muted-soft mb-0">Sharpen your architectural and behavioral interview skills with AI-scored technical questions and model answers.</p>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4">
+        <div class="cc-card feature-card">
+          <div class="feature-icon"><i class="fa-solid fa-robot"></i></div>
+          <h5 class="fw-bold">Interactive Career Copilot Bot</h5>
+          <p class="text-muted-soft mb-0">Instant context-aware career counselling powered by Gemini Pro, drawing directly from your personalized profile metrics.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- How it Works Section -->
+<section id="how-it-works" class="section-pad bg-light">
+  <div class="container-narrow">
+    <div class="text-center mb-5">
+      <span class="section-eyebrow">Strategic Workflow</span>
+      <h2 class="mt-2 fw-bold">How Career Copilot Accelerates You</h2>
+    </div>
+
+    <div class="row g-4 text-center">
+      <div class="col-md-3">
+        <div class="cc-card p-4 h-100">
+          <div class="feature-icon mx-auto">1</div>
+          <h6 class="fw-bold mt-3">Profile Assessment</h6>
+          <p class="text-muted-soft small mb-0">Input your degree, current stack, and career target.</p>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="cc-card p-4 h-100">
+          <div class="feature-icon mx-auto">2</div>
+          <h6 class="fw-bold mt-3">Gemini Pro Diagnosis</h6>
+          <p class="text-muted-soft small mb-0">AI identifies skill gaps and generates custom milestones.</p>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="cc-card p-4 h-100">
+          <div class="feature-icon mx-auto">3</div>
+          <h6 class="fw-bold mt-3">Roadmap Execution</h6>
+          <p class="text-muted-soft small mb-0">Track completed steps and master tailored learning modules.</p>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="cc-card p-4 h-100">
+          <div class="feature-icon mx-auto">4</div>
+          <h6 class="fw-bold mt-3">Interview Mastery</h6>
+          <p class="text-muted-soft small mb-0">Simulate interviews and land offers with confidence.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Bottom CTA Section -->
+<section class="section-pad text-center">
+  <div class="container-narrow">
+    <div class="cc-card p-5 bg-gradient-primary text-white text-center">
+      <h2 class="text-white fw-bold mb-3">Ready to Accelerate Your Tech Career?</h2>
+      <p class="text-white-50 mx-auto mb-4" style="max-width: 580px;">
+        Join students and engineers leveraging Gemini Pro to map their trajectory, learn missing skills, and build competitive portfolios.
+      </p>
+      {% if is_authenticated %}
+      <a href="{{ url_for('dashboard') }}" class="btn btn-light btn-lg fw-bold text-purple px-4">
+        Go to Dashboard <i class="fa-solid fa-arrow-right ms-2"></i>
+      </a>
+      {% else %}
+      <a href="{{ url_for('register') }}" class="btn btn-light btn-lg fw-bold text-purple px-4">
+        Create Your Account Now <i class="fa-solid fa-arrow-right ms-2"></i>
+      </a>
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% endblock %}

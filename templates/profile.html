@@ -1,0 +1,241 @@
+{% extends "base.html" %}
+{% block title %}Profile & Settings – Career Copilot{% endblock %}
+
+{% block body %}
+{% set active_page = 'profile' %}
+<div class="app-shell">
+  {% include "_sidebar.html" %}
+  <div class="cc-main">
+    {% include "_topbar.html" %}
+
+    <div class="cc-content">
+      <h3 class="mb-1">Account & Career Profile</h3>
+      <p class="text-muted-soft mb-4">Manage your credentials, academic information, security settings, and verified skills.</p>
+
+      <div class="row g-4">
+        <!-- Profile Identity Card -->
+        <div class="col-lg-4">
+          <div class="cc-card p-4 text-center mb-4">
+            <div class="cc-avatar mx-auto mb-3" style="width:84px; height:84px; font-size:1.8rem; border-radius:24px;">
+              {{ user.initials }}
+            </div>
+            <h5 class="mb-1 fw-bold">{{ user.name or "User" }}</h5>
+            <p class="text-muted-soft small mb-1">{{ user.email }}</p>
+            <p class="text-muted-soft small mb-3">
+              {% if user.education %}{{ user.education }}{% endif %}{% if user.branch %}, {{ user.branch }}{% endif %}
+            </p>
+            <div class="d-flex justify-content-center gap-2 mb-4">
+              {% if user.github_url %}
+              <a href="{{ user.github_url }}" target="_blank" rel="noopener noreferrer" class="btn btn-ghost-cc btn-sm-cc">
+                <i class="fa-brands fa-github me-1"></i>GitHub
+              </a>
+              {% endif %}
+              {% if user.linkedin_url %}
+              <a href="{{ user.linkedin_url }}" target="_blank" rel="noopener noreferrer" class="btn btn-ghost-cc btn-sm-cc">
+                <i class="fa-brands fa-linkedin me-1"></i>LinkedIn
+              </a>
+              {% endif %}
+            </div>
+            <a href="{{ url_for('logout') }}" class="btn btn-outline-danger w-100 btn-sm-cc">
+              <i class="fa-solid fa-right-from-bracket me-2"></i>Sign Out
+            </a>
+          </div>
+
+          <!-- Security Badge Card -->
+          <div class="cc-card p-4">
+            <h6 class="fw-bold mb-3"><i class="fa-solid fa-shield-halved text-purple me-2"></i>Security Status</h6>
+            <div class="d-flex justify-content-between align-items-center mb-2 small">
+              <span class="text-muted-soft">Two-Factor Authentication:</span>
+              {% if user.mfa_enabled %}
+              <span class="badge-skill bg-emerald-soft text-emerald fw-bold">Active 🔒</span>
+              {% else %}
+              <span class="badge-skill badge-missing fw-bold">Disabled ⚠️</span>
+              {% endif %}
+            </div>
+            <div class="d-flex justify-content-between align-items-center mb-2 small">
+              <span class="text-muted-soft">Session Protection:</span>
+              <span class="badge-skill bg-purple-soft text-purple fw-bold">HttpOnly + SameSite</span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center small">
+              <span class="text-muted-soft">Password Hash:</span>
+              <span class="badge-skill bg-purple-soft text-purple fw-bold">Scrypt / PBKDF2</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Editable Profile Forms -->
+        <div class="col-lg-8">
+          <!-- Personal and Academic Details -->
+          <div class="cc-card p-4 mb-4">
+            <h6 class="mb-3 fw-bold">Academic & Career Profile</h6>
+            <form method="POST" action="{{ url_for('profile') }}">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+              <input type="hidden" name="action" value="profile">
+              <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                  <label class="form-label small fw-semibold">Full Name</label>
+                  <input type="text" name="name" class="form-control form-control-cc"
+                         value="{{ user.name or '' }}" placeholder="Full Name" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label small fw-semibold">Primary Career Target</label>
+                  <input type="text" name="career_goal" class="form-control form-control-cc"
+                         value="{{ user.career_goal or '' }}" placeholder="e.g. Full-Stack Engineer">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label small fw-semibold">Degree / Education</label>
+                  <input type="text" name="education" class="form-control form-control-cc"
+                         value="{{ user.education or '' }}" placeholder="e.g. B.Tech / B.S.">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label small fw-semibold">Branch / Major</label>
+                  <input type="text" name="branch" class="form-control form-control-cc"
+                         value="{{ user.branch or '' }}" placeholder="e.g. Computer Science">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label small fw-semibold">GitHub Profile URL</label>
+                  <input type="url" name="github_url" class="form-control form-control-cc"
+                         value="{{ user.github_url or '' }}" placeholder="https://github.com/username"
+                         pattern="https://(www\.)?github\.com/[A-Za-z0-9_.-]+/?">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label small fw-semibold">LinkedIn Profile URL</label>
+                  <input type="url" name="linkedin_url" class="form-control form-control-cc"
+                         value="{{ user.linkedin_url or '' }}" placeholder="https://linkedin.com/in/username"
+                         pattern="https://(www\.)?linkedin\.com/in/[A-Za-z0-9_.-]+/?">
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary-cc btn-sm-cc">
+                <i class="fa-solid fa-floppy-disk me-1"></i>Save Profile
+              </button>
+            </form>
+          </div>
+
+          <!-- Skills Management -->
+          <div class="cc-card p-4 mb-4">
+            <h6 class="mb-3 fw-bold">Verified Skills</h6>
+            <form method="POST" action="{{ url_for('profile') }}">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+              <input type="hidden" name="action" value="skills">
+              <div class="mb-3">
+                <label class="form-label small fw-semibold">Active Skills <span class="text-muted-soft">(comma separated)</span></label>
+                <input type="text" name="skills_input" class="form-control form-control-cc"
+                       value="{{ user.skills_list | join(', ') }}"
+                       placeholder="e.g. Python, React, SQL, Docker, Git">
+              </div>
+              <div class="mb-3">
+                {% for s in user.skills_list %}
+                <span class="badge-skill bg-emerald-soft text-emerald">{{ s }}</span>
+                {% endfor %}
+                {% if not user.skills_list %}
+                <span class="text-muted-soft small">No skills added yet. Add your skills above.</span>
+                {% endif %}
+              </div>
+              <button type="submit" class="btn btn-outline-cc btn-sm-cc">
+                <i class="fa-solid fa-arrows-rotate me-1"></i>Update Skills
+              </button>
+            </form>
+          </div>
+
+          <!-- Multi-Factor Authentication (MFA / 2FA) -->
+          <div class="cc-card p-4 mb-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <div>
+                <h6 class="mb-1 fw-bold">Multi-Factor Authentication (2FA)</h6>
+                <p class="text-muted-soft small mb-0">Protect your account using Time-based One-Time Passwords (TOTP RFC 6238).</p>
+              </div>
+              {% if user.mfa_enabled %}
+              <span class="badge-skill bg-emerald-soft text-emerald fw-bold">Enabled</span>
+              {% else %}
+              <span class="badge-skill bg-purple-soft text-purple fw-bold">Available</span>
+              {% endif %}
+            </div>
+
+            {% if not user.mfa_enabled %}
+            <div class="p-3 bg-light rounded-3 mb-3">
+              <div class="small fw-bold text-purple mb-1">
+                <i class="fa-solid fa-mobile-screen-button me-1"></i>Setup with Google Authenticator / Authy
+              </div>
+              <p class="text-muted-soft small mb-2">Scan or enter this Base32 secret key into your authenticator app:</p>
+              <div class="d-flex align-items-center gap-2 mb-3">
+                <code class="p-2 bg-white rounded border fw-bold text-dark fs-6 letter-spacing-1">{{ mfa_setup_secret }}</code>
+              </div>
+
+              <form method="POST" action="{{ url_for('profile') }}" class="d-flex gap-2">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <input type="hidden" name="action" value="enable_mfa">
+                <input type="hidden" name="mfa_secret" value="{{ mfa_setup_secret }}">
+                <input type="text" name="totp_code" class="form-control form-control-cc form-control-sm" style="max-width:180px;"
+                       placeholder="Enter 6-digit code" maxlength="6" pattern="[0-9]{6}" required>
+                <button type="submit" class="btn btn-primary-cc btn-sm-cc">Verify & Enable 2FA</button>
+              </form>
+            </div>
+            {% else %}
+            <div class="p-3 bg-light rounded-3 mb-3">
+              <p class="text-emerald small mb-2 fw-semibold">
+                <i class="fa-solid fa-circle-check me-1"></i>2FA is active. Every login requires your authenticator security code.
+              </p>
+              <form method="POST" action="{{ url_for('profile') }}" onsubmit="return confirm('Disable 2FA? This lowers your account protection.');">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <input type="hidden" name="action" value="disable_mfa">
+                <div class="d-flex gap-2 align-items-center">
+                  <input type="password" name="current_password" class="form-control form-control-cc form-control-sm" style="max-width:220px;"
+                         placeholder="Enter account password" required>
+                  <input type="text" name="totp_code" class="form-control form-control-cc form-control-sm" style="max-width:160px;"
+                         placeholder="6-digit code" maxlength="6" pattern="[0-9]{6}" required>
+                  <button type="submit" class="btn btn-outline-danger btn-sm-cc">Disable 2FA</button>
+                </div>
+              </form>
+            </div>
+            {% endif %}
+          </div>
+
+          <!-- Change Password -->
+          <div class="cc-card p-4 mb-4">
+            <h6 class="mb-3 fw-bold">Change Password</h6>
+            <form method="POST" action="{{ url_for('profile') }}">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+              <input type="hidden" name="action" value="password">
+              <div class="row g-3 mb-3">
+                <div class="col-md-4">
+                  <label class="form-label small fw-semibold">Current Password</label>
+                  <input type="password" name="current_password" class="form-control form-control-cc" placeholder="••••••••" required>
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label small fw-semibold">New Password</label>
+                  <input type="password" name="new_password" class="form-control form-control-cc" placeholder="Min 8 chars, letters & numbers" required>
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label small fw-semibold">Confirm New</label>
+                  <input type="password" name="confirm_new_password" class="form-control form-control-cc" placeholder="••••••••" required>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-outline-cc btn-sm-cc">
+                <i class="fa-solid fa-key me-1"></i>Update Password
+              </button>
+            </form>
+          </div>
+
+          <!-- Delete Account Zone -->
+          <div class="cc-card p-4 border-danger-subtle">
+            <h6 class="mb-1 text-danger fw-bold">Danger Zone</h6>
+            <p class="text-muted-soft small mb-3">Permanently delete your account, roadmap history, and analysis records from MySQL.</p>
+            <form method="POST" action="{{ url_for('profile') }}" onsubmit="return confirm('Are you certain? This action is permanent and cannot be undone.');">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+              <input type="hidden" name="action" value="delete_account">
+              <div class="mb-3">
+                <label class="form-label small fw-semibold">Type your registered email to confirm deletion</label>
+                <input type="email" name="confirm_email" class="form-control form-control-cc" placeholder="{{ user.email }}" required>
+              </div>
+              <button type="submit" class="btn btn-danger btn-sm-cc">
+                <i class="fa-solid fa-trash-can me-1"></i>Delete My Account
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% include "_chat_widget.html" %}
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Two-Factor Authentication – Career Copilot{% endblock %}
+
+{% block body %}
+<div class="auth-shell">
+  <div class="auth-visual d-none d-lg-flex">
+    <div style="max-width:400px;">
+      <a href="{{ url_for('index') }}" class="d-inline-flex align-items-center gap-2 text-white fw-bold fs-4 mb-4">
+        <i class="fa-solid fa-compass-drafting text-purple-400"></i> Career Copilot
+      </a>
+      <h2 class="text-white fw-bold mb-3">Two-Factor Authentication</h2>
+      <p style="color:#C9BEEC;" class="mb-4">Your account is fortified with multi-factor authentication. Enter the security code from your authenticator app to complete sign in.</p>
+      <div class="d-flex align-items-center gap-3 text-white-50 small">
+        <div><i class="fa-solid fa-shield-halved text-emerald me-1"></i> TOTP RFC 6238</div>
+        <div><i class="fa-solid fa-lock text-purple-400 me-1"></i> Zero-Knowledge Auth</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="auth-form-side">
+    <div class="auth-card">
+      <a href="{{ url_for('index') }}" class="d-lg-none d-inline-flex align-items-center gap-2 fw-bold fs-4 mb-4 text-purple">
+        <i class="fa-solid fa-compass-drafting"></i> Career Copilot
+      </a>
+      <div class="metric-icon-box bg-purple-soft mb-3">
+        <i class="fa-solid fa-shield-halved text-purple fs-4"></i>
+      </div>
+      <h3 class="fw-bold mb-1">Verify Your Identity</h3>
+      <p class="text-muted-soft mb-4">Open Google Authenticator or your 2FA app and enter the 6-digit code for <strong>{{ pending_email }}</strong>.</p>
+
+      <form method="POST" action="{{ url_for('login_2fa') }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <div class="form-group-cc mb-4">
+          <label class="form-label small fw-semibold">6-Digit Security Code</label>
+          <input type="text" name="totp_code" class="form-control form-control-cc text-center fs-4 fw-bold"
+                 placeholder="000000" maxlength="6" pattern="[0-9]{6}" autocomplete="one-time-code" required autofocus>
+        </div>
+        <button type="submit" class="btn btn-primary-cc w-100">Verify Code & Sign In</button>
+      </form>
+
+      <p class="text-center small text-muted-soft mt-4 mb-0">
+        Lost access? <a href="{{ url_for('login') }}" class="fw-semibold text-purple">Back to Login</a>
+      </p>
+    </div>
+  </div>
+</div>
+{% endblock %}

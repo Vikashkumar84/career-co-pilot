@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Sign In – Career Copilot{% endblock %}
+
+{% block body %}
+<div class="auth-shell">
+  <div class="auth-visual d-none d-lg-flex">
+    <div style="max-width:400px;">
+      <a href="{{ url_for('index') }}" class="d-inline-flex align-items-center gap-2 text-white fw-bold fs-4 mb-4">
+        <i class="fa-solid fa-compass-drafting text-purple-400"></i> Career Copilot
+      </a>
+      <h2 class="text-white fw-bold mb-3">Accelerate Your Engineering Career</h2>
+      <p style="color:#C9BEEC;" class="mb-4">Log in to track your persistent roadmaps, verified skill gap assessments, and Gemini Pro career guidance.</p>
+      <div class="d-flex align-items-center gap-3 text-white-50 small">
+        <div><i class="fa-solid fa-shield-halved text-emerald me-1"></i> MySQL Encrypted</div>
+        <div><i class="fa-solid fa-bolt text-purple-400 me-1"></i> Gemini Pro Engine</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="auth-form-side">
+    <div class="auth-card">
+      <a href="{{ url_for('index') }}" class="d-lg-none d-inline-flex align-items-center gap-2 fw-bold fs-4 mb-4 text-purple">
+        <i class="fa-solid fa-compass-drafting"></i> Career Copilot
+      </a>
+      <h3 class="fw-bold mb-1">Sign In</h3>
+      <p class="text-muted-soft mb-4">Enter your credentials to access your dashboard.</p>
+
+      <form id="loginForm" method="POST" action="{{ url_for('login') }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <div class="form-group-cc mb-3">
+          <label class="form-label small fw-semibold">Email Address</label>
+          <input aria-label="Email" type="email" name="email" class="form-control form-control-cc"
+                 placeholder="name@example.com" value="{{ form_email or '' }}" required>
+        </div>
+        <div class="form-group-cc mb-3">
+          <label class="form-label small fw-semibold">Password</label>
+          <input aria-label="Password" type="password" name="password" class="form-control form-control-cc" placeholder="••••••••" required>
+        </div>
+        <div class="d-flex align-items-center justify-content-between mb-4">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="rememberMe" name="remember">
+            <label class="form-check-label small text-muted-soft" for="rememberMe">Remember login state</label>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary-cc w-100">Sign In to Dashboard</button>
+      </form>
+
+      <p class="text-center small text-muted-soft mt-4 mb-0">
+        Don't have an account? <a href="{{ url_for('register') }}" class="fw-semibold text-purple">Create an account</a>
+      </p>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,36 @@
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+<aside class="cc-sidebar" id="ccSidebar">
+  <div class="brand">
+    <i class="fa-solid fa-compass-drafting me-2"></i>Career<span>Copilot</span>
+  </div>
+
+  <nav class="cc-sidebar-nav" aria-label="Main navigation">
+    <a href="{{ url_for('dashboard') }}" class="cc-sidebar-link {{ 'active' if active_page == 'dashboard' }}">
+      <i class="fa-solid fa-table-cells-large"></i> Dashboard
+    </a>
+    <a href="{{ url_for('career_analysis') }}" class="cc-sidebar-link {{ 'active' if active_page == 'career_analysis' }}">
+      <i class="fa-solid fa-magnifying-glass-chart"></i> Career Analysis
+    </a>
+    <a href="{{ url_for('roadmap') }}" class="cc-sidebar-link {{ 'active' if active_page == 'roadmap' }}">
+      <i class="fa-solid fa-route"></i> Career Roadmap
+    </a>
+    <a href="{{ url_for('courses') }}" class="cc-sidebar-link {{ 'active' if active_page == 'courses' }}">
+      <i class="fa-solid fa-graduation-cap"></i> Recommended Courses
+    </a>
+    <a href="{{ url_for('interview') }}" class="cc-sidebar-link {{ 'active' if active_page == 'interview' }}">
+      <i class="fa-solid fa-comments"></i> Interview Prep
+    </a>
+    <a href="{{ url_for('progress') }}" class="cc-sidebar-link {{ 'active' if active_page == 'progress' }}">
+      <i class="fa-solid fa-chart-line"></i> My Progress
+    </a>
+    <a href="{{ url_for('profile') }}" class="cc-sidebar-link {{ 'active' if active_page == 'profile' }}">
+      <i class="fa-solid fa-user"></i> Profile
+    </a>
+  </nav>
+
+  <div class="cc-sidebar-footer">
+    <a href="{{ url_for('logout') }}" class="cc-sidebar-link">
+      <i class="fa-solid fa-right-from-bracket"></i> Logout
+    </a>
+  </div>
+</aside>

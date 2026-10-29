@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block title %}Curated Courses – Career Copilot{% endblock %}
+
+{% block body %}
+{% set active_page = 'courses' %}
+<div class="app-shell">
+  {% include "_sidebar.html" %}
+  <div class="cc-main">
+    {% include "_topbar.html" %}
+
+    <div class="cc-content">
+      <div class="d-flex flex-wrap align-items-center justify-content-between mb-4 gap-3">
+        <div>
+          <h3 class="mb-1">Recommended Learning Paths</h3>
+          <p class="text-muted-soft mb-0">Courses and skill modules customized to close your verified skill gaps.</p>
+        </div>
+      </div>
+
+      <!-- Personalized Skill Gap Courses Section -->
+      {% if recommended_courses %}
+      <div class="mb-5">
+        <div class="d-flex align-items-center gap-2 mb-3">
+          <span class="badge-skill bg-purple-soft text-purple"><i class="fa-solid fa-bolt me-1"></i>Priority Action</span>
+          <h5 class="mb-0 fw-bold">Targeted Skill-Gap Modules</h5>
+        </div>
+        <div class="row g-4">
+          {% for course in recommended_courses %}
+          <div class="col-md-6 col-lg-4">
+            <div class="cc-card p-4 h-100 d-flex flex-column justify-content-between">
+              <div>
+                <div class="feature-icon mb-3"><i class="fa-solid {{ course.icon }}"></i></div>
+                <span class="badge-skill bg-purple-soft text-purple mb-2">{{ course.category }}</span>
+                <h6 class="fw-bold mb-2">{{ course.name }}</h6>
+                <div class="d-flex gap-3 text-muted-soft small mb-3">
+                  <span><i class="fa-solid fa-signal me-1"></i>{{ course.level }}</span>
+                  <span><i class="fa-regular fa-clock me-1"></i>{{ course.duration }}</span>
+                </div>
+                <div class="mb-3">
+                  {% for s in course.skills %}
+                  <span class="badge-skill">{{ s }}</span>
+                  {% endfor %}
+                </div>
+              </div>
+              <a href="{{ url_for('roadmap') }}" class="btn btn-outline-cc btn-sm-cc w-100 mt-2">
+                Start Module <i class="fa-solid fa-arrow-right ms-1"></i>
+              </a>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+
+      <!-- Core Curriculum Catalog -->
+      <div>
+        <h5 class="mb-3 fw-bold">Core Engineering Curriculum</h5>
+        <div class="row g-4">
+          {% for course in catalog_courses %}
+          <div class="col-md-6 col-lg-4">
+            <div class="cc-card p-4 h-100 d-flex flex-column justify-content-between">
+              <div>
+                <div class="feature-icon mb-3"><i class="fa-solid {{ course.icon }}"></i></div>
+                <span class="badge-skill mb-2">{{ course.category }}</span>
+                <h6 class="fw-bold mb-2">{{ course.name }}</h6>
+                <div class="d-flex gap-3 text-muted-soft small mb-3">
+                  <span><i class="fa-solid fa-signal me-1"></i>{{ course.level }}</span>
+                  <span><i class="fa-regular fa-clock me-1"></i>{{ course.duration }}</span>
+                </div>
+                <div class="mb-3">
+                  {% for s in course.skills %}
+                  <span class="badge-skill">{{ s }}</span>
+                  {% endfor %}
+                </div>
+                {% if course.progress > 0 %}
+                <div class="mb-3">
+                  <div class="d-flex justify-content-between small mb-1">
+                    <span class="text-muted-soft">Progress</span>
+                    <span class="fw-semibold text-purple">{{ course.progress }}%</span>
+                  </div>
+                  <div class="cc-progress">
+                    <div class="cc-progress-bar" style="width:{{ course.progress }}%;"></div>
+                  </div>
+                </div>
+                {% endif %}
+              </div>
+              <a href="{{ url_for('roadmap') }}" class="btn btn-primary-cc btn-sm-cc w-100 mt-2">
+                {{ 'Continue Learning' if course.progress > 0 else 'Enroll & Learn' }}
+              </a>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% include "_chat_widget.html" %}
+{% endblock %}
